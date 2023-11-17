@@ -1,5 +1,5 @@
 from flask import Flask, request
-import urllib.request, json
+import requests
 
 app = Flask(__name__)
 app.json.sort_keys = False
@@ -13,9 +13,8 @@ def servant_search():
     
     query = request.args.get("query")
     url = f"https://api.atlasacademy.io/nice/JP/servant/search?name={query}&lang=en"
-    response = urllib.request.urlopen(url)
-    data = response.read()
-    data = json.loads(data)
+    response = requests.get(url)
+    data = response.json()
 
     results = []
     for s in data:
